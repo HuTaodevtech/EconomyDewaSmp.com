@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rank - Economy Dewa SMP</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg: #0E1912;
+  --bg-panel: #16241B;
+  --bg-panel-alt: #1C2E22;
+  --gold: #D9A94B;
+  --gold-soft: #E8C784;
+  --emerald: #3FBE79;
+  --emerald-soft: #57D793;
+  --text: #EAEFE6;
+  --text-muted: #93A896;
+  --border: #2A3E2F;
+  --radius: 6px;
+}
+
+*{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Rubik', system-ui, sans-serif;
+  line-height:1.6;
+  background-image:
+    linear-gradient(180deg, rgba(14,25,18,0.97), rgba(14,25,18,0.99)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 32px);
+}
+
+a{color:inherit;}
+
+.pixel{
+  font-family:'Press Start 2P', monospace;
+}
+
+/* ---------- layout shells ---------- */
+.wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+/* ---------- nav ---------- */
+.site-nav{
+  border-bottom:1px solid var(--border);
+  background:rgba(14,25,18,0.9);
+  backdrop-filter:blur(6px);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.site-nav .wrap{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:72px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+.brand img{
+  width:36px;
+  height:36px;
+  display:block;
+}
+.brand-name{
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:0.2px;
+}
+.brand-name span{
+  display:block;
+  font-size:11px;
+  font-weight:500;
+  color:var(--gold-soft);
+}
+.nav-links{
+  display:flex;
+  gap:4px;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.nav-links a{
+  display:block;
+  padding:10px 16px;
+  border-radius:var(--radius);
+  text-decoration:none;
+  font-size:14px;
+  font-weight:500;
+  color:var(--text-muted);
+  border:1px solid transparent;
+  transition:color .15s ease, border-color .15s ease, background-color .15s ease;
+}
+.nav-links a:hover{
+  color:var(--text);
+  border-color:var(--border);
+  background:var(--bg-panel);
+}
+.nav-links a.active{
+  color:var(--emerald-soft);
+  border-color:var(--border);
+  background:var(--bg-panel);
+}
+.nav-toggle{display:none;}
+
+@media (max-width:720px){
+  .nav-links{
+    position:fixed;
+    inset:72px 0 auto 0;
+    flex-direction:column;
+    background:var(--bg-panel);
+    border-bottom:1px solid var(--border);
+    padding:8px;
+    transform:translateY(-8px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .nav-links.open{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .nav-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;
+    height:40px;
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    background:var(--bg-panel);
+    cursor:pointer;
+  }
+  .nav-toggle svg{width:18px;height:18px;}
+}
+
+/* ---------- footer ---------- */
+.site-footer{
+  border-top:1px solid var(--border);
+  margin-top:96px;
+  padding:32px 0;
+  color:var(--text-muted);
+  font-size:13px;
+}
+.site-footer .wrap{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.footer-brand img{width:22px;height:22px;}
+
+/* ---------- hero ---------- */
+.hero{
+  padding:72px 0 56px;
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:48px;
+  align-items:center;
+}
+.hero-eyebrow{
+  color:var(--gold-soft);
+  font-size:13px;
+  font-weight:600;
+  margin:0 0 14px;
+}
+.hero h1{
+  font-family:'Press Start 2P', monospace;
+  font-size:28px;
+  line-height:1.55;
+  margin:0 0 20px;
+  color:var(--emerald-soft);
+}
+.hero-lines{
+  list-style:none;
+  margin:0 0 32px;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:52ch;
+}
+.hero-lines li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  color:var(--text-muted);
+  font-size:15px;
+}
+.hero-lines li .dot{
+  width:9px;height:9px;flex:none;margin-top:6px;
+  background:var(--emerald);
+  border-radius:2px;
+}
+.hero-art{
+  display:flex;
+  justify-content:center;
+}
+.hero-art img{
+  width:180px;
+  height:180px;
+  filter:drop-shadow(0 20px 40px rgba(63,190,121,0.18));
+}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding-top:40px;}
+  .hero-art{order:-1;}
+  .hero h1{font-size:20px;}
+}
+
+/* ---------- IP panel ---------- */
+.ip-panel{
+  background:var(--bg-panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background-color:var(--border);
+  overflow:hidden;
+  margin-bottom:16px;
+}
+.ip-field{
+  background:var(--bg-panel);
+  padding:20px 24px;
+}
+.ip-field label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-muted);
+  margin-bottom:8px;
+}
+.ip-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.ip-row code{
+  font-family:'Rubik',sans-serif;
+  font-size:18px;
+  font-weight:600;
+  color:var(--text);
+}
+.copy-btn{
+  flex:none;
+  width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:var(--bg-panel-alt);
+  cursor:pointer;
+  color:var(--text-muted);
+  transition:color .15s ease, border-color .15s ease;
+}
+.copy-btn:hover{color:var(--emerald-soft);border-color:var(--emerald);}
+.copy-btn svg{width:16px;height:16px;}
+.copy-btn.copied{color:var(--emerald-soft);border-color:var(--emerald);}
+.copy-hint{
+  font-size:12px;
+  color:var(--text-muted);
+  margin-top:6px;
+  min-height:16px;
+}
+
+@media (max-width:560px){
+  .ip-panel{grid-template-columns:1fr;}
+}
+
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 20px;
+  border-radius:var(--radius);
+  font-weight:600;
+  font-size:14px;
+  text-decoration:none;
+  border:1px solid transparent;
+}
+.btn svg{width:16px;height:16px;}
+.btn-primary{
+  background:var(--emerald);
+  color:#0E1912;
+}
+.btn-primary:hover{background:var(--emerald-soft);}
+.btn-outline{
+  border-color:var(--border);
+  color:var(--text);
+  background:var(--bg-panel);
+}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold-soft);}
+
+/* ---------- section shell ---------- */
+.section{padding:56px 0;}
+.section-head{
+  margin-bottom:28px;
+  max-width:62ch;
+}
+.section-head h2{
+  font-size:22px;
+  margin:0 0 10px;
+}
+.section-head p{
+  color:var(--text-muted);
+  margin:0;
+  font-size:15px;
+}
+
+/* ---------- feature list (block rows, not cards) ---------- */
+.feature-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-top:1px solid var(--border);
+}
+.feature-list li{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  padding:18px 0;
+  border-bottom:1px solid var(--border);
+}
+.feature-icon{
+  flex:none;
+  width:38px;height:38px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--bg-panel);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold-soft);
+}
+.feature-icon svg{width:18px;height:18px;}
+.feature-body h3{
+  margin:0 0 4px;
+  font-size:15px;
+}
+.feature-body p{
+  margin:0;
+  color:var(--text-muted);
+  font-size:14px;
+}
+
+/* ---------- page header (non-hero pages) ---------- */
+.page-header{
+  padding:56px 0 8px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:8px;
+}
+.page-header h1{
+  font-family:'Press Start 2P', monospace;
+  font-size:20px;
+  color:var(--emerald-soft);
+  margin:0 0 14px;
+  line-height:1.6;
+}
+.page-header p{
+  color:var(--text-muted);
+  max-width:62ch;
+  margin:0 0 32px;
+  font-size:15px;
+}
+
+/* ---------- rank tier list ---------- */
+.rank-tier-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.rank-tier{
+  display:flex;
+  gap:28px;
+  align-items:center;
+  background:var(--bg-panel);
+  border:1px solid var(--border);
+  border-left:4px solid var(--tier-color);
+  border-radius:var(--radius);
+  padding:20px 24px;
+}
+.rank-tier-main{
+  flex:none;
+  width:190px;
+}
+.rank-tier-name{
+  margin:0 0 6px;
+  font-family:'Press Start 2P', monospace;
+  font-size:13px;
+  line-height:1.5;
+  background-image:var(--tier-gradient);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:var(--tier-color);
+}
+.rank-tier-price{
+  margin:0;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+}
+.rank-tier-badge-default{
+  display:inline-block;
+  margin-top:8px;
+  font-size:11px;
+  font-weight:600;
+  padding:4px 10px;
+  border-radius:20px;
+  background:var(--bg-panel-alt);
+  border:1px solid var(--border);
+  color:var(--text-muted);
+}
+.rank-tier-buy{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:10px;
+  font-size:12px;
+  font-weight:600;
+  font-family:inherit;
+  padding:7px 14px;
+  border-radius:20px;
+  background:var(--bg-panel-alt);
+  border:1px solid var(--border);
+  color:var(--text);
+  cursor:pointer;
+}
+.rank-tier-buy svg{width:13px;height:13px;flex:none;}
+.rank-tier-buy:hover{border-color:var(--tier-color);color:var(--tier-color);}
+.buy-dropdown{position:relative;display:inline-block;}
+.buy-menu{
+  position:absolute;
+  top:calc(100% + 6px);
+  left:0;
+  min-width:180px;
+  background:var(--bg-panel-alt);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:6px;
+  display:none;
+  flex-direction:column;
+  gap:2px;
+  z-index:15;
+  box-shadow:0 10px 24px rgba(0,0,0,0.4);
+}
+.buy-menu.open{display:flex;}
+.buy-menu-label{
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--text-muted);
+  padding:6px 8px 2px;
+}
+.buy-menu-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 8px;
+  border-radius:4px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  text-decoration:none;
+}
+.buy-menu-item:hover{background:var(--bg-panel);color:var(--emerald-soft);}
+.buy-menu-item svg{width:14px;height:14px;flex:none;color:#3FBE79;}
+
+/* ---------- QRIS modal ---------- */
+.qris-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(6,12,8,0.75);
+  backdrop-filter:blur(3px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  z-index:100;
+}
+.qris-overlay.open{display:flex;}
+.qris-modal{
+  background:var(--bg-panel);
+  border:1px solid var(--border);
+  border-radius:10px;
+  max-width:300px;
+  width:100%;
+  padding:20px;
+  position:relative;
+  text-align:center;
+}
+.qris-close{
+  position:absolute;
+  top:12px;right:12px;
+  width:30px;height:30px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:var(--bg-panel-alt);
+  color:var(--text-muted);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.qris-close:hover{color:var(--text);}
+.qris-close svg{width:14px;height:14px;}
+.qris-modal h3{margin:0 0 4px;font-size:14px;}
+.qris-modal .qris-order{
+  font-size:12px;
+  color:var(--text-muted);
+  margin:0 0 14px;
+}
+.qris-modal .qris-order strong{color:var(--gold-soft);}
+.qris-modal img{
+  width:100%;
+  max-width:200px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  margin:0 auto 14px;
+  display:block;
+}
+.qris-note{
+  font-size:11px;
+  color:var(--text-muted);
+  margin:0 0 16px;
+  line-height:1.6;
+}
+.qris-confirm{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:11px;
+  border-radius:var(--radius);
+  border:none;
+  background:var(--emerald);
+  color:#0E1912;
+  font-weight:700;
+  font-size:13px;
+  cursor:pointer;
+}
+.qris-confirm:hover{background:var(--emerald-soft);}
+.qris-confirm svg{width:16px;height:16px;}
+.rank-tier-features{
+  flex:1;
+  border-left:1px solid var(--border);
+  padding-left:28px;
+}
+.rank-tier-features ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(2, minmax(140px,1fr));
+  gap:8px 24px;
+}
+.rank-tier-features li{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:13px;
+  color:var(--text-muted);
+}
+.rank-tier-features .bullet{
+  flex:none;
+  width:6px;height:6px;
+  margin-top:6px;
+  border-radius:2px;
+  background:var(--tier-color);
+}
+.rank-note{
+  margin-top:20px;
+  font-size:13px;
+  color:var(--text-muted);
+}
+
+@media (max-width:760px){
+  .rank-tier{flex-direction:column;align-items:stretch;gap:16px;}
+  .rank-tier-main{width:auto;}
+  .rank-tier-features{border-left:none;padding-left:0;border-top:1px solid var(--border);padding-top:16px;}
+  .rank-tier-features ul{grid-template-columns:1fr;}
+}
+
+/* ---------- rules ---------- */
+.rules-list{
+  counter-reset:rule;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.rules-list li{
+  counter-increment:rule;
+  display:flex;
+  gap:18px;
+  padding:20px 0;
+  border-bottom:1px solid var(--border);
+}
+.rules-list li::before{
+  content:counter(rule);
+  flex:none;
+  width:34px;height:34px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--bg-panel);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+  color:var(--gold-soft);
+  font-size:14px;
+}
+.rules-list h3{margin:2px 0 4px;font-size:15px;}
+.rules-list p{margin:0;color:var(--text-muted);font-size:14px;}
+
+.steps-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  position:relative;
+}
+.steps-list li{
+  display:flex;
+  gap:18px;
+  padding-bottom:28px;
+  position:relative;
+}
+.steps-list li:not(:last-child)::after{
+  content:"";
+  position:absolute;
+  left:16px;
+  top:34px;
+  bottom:0;
+  width:1px;
+  background:var(--border);
+}
+.step-num{
+  flex:none;
+  width:34px;height:34px;
+  border-radius:50%;
+  background:var(--emerald);
+  color:#0E1912;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+  font-size:14px;
+  z-index:1;
+}
+.steps-list h3{margin:2px 0 4px;font-size:15px;}
+.steps-list p{margin:0;color:var(--text-muted);font-size:14px;}
+.steps-list code{
+  background:var(--bg-panel);
+  border:1px solid var(--border);
+  padding:2px 6px;
+  border-radius:4px;
+  font-size:13px;
+}
+
+/* ---------- about ---------- */
+.about-grid{
+  display:grid;
+  grid-template-columns:1.3fr 0.7fr;
+  gap:48px;
+}
+.about-copy p{color:var(--text-muted);font-size:15px;}
+.about-copy h3{font-size:16px;margin:28px 0 8px;}
+.team-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-top:1px solid var(--border);
+}
+.team-list li{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:14px 0;
+  border-bottom:1px solid var(--border);
+}
+.team-role{color:var(--text-muted);font-size:13px;}
+.social-list{
+  list-style:none;
+  margin:20px 0 0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.social-list a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  padding:10px 14px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--bg-panel);
+  font-size:14px;
+  font-weight:500;
+}
+.social-list a:hover{border-color:var(--gold);color:var(--gold-soft);}
+.social-list svg{width:16px;height:16px;flex:none;}
+
+@media (max-width:820px){
+  .about-grid{grid-template-columns:1fr;}
+}
+
+
+/* ---------- server status widget ---------- */
+.status-panel{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  background:var(--bg-panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 22px;
+  margin-bottom:32px;
+}
+.status-dot{
+  flex:none;
+  width:12px;height:12px;
+  border-radius:50%;
+  background:var(--text-muted);
+  box-shadow:0 0 0 4px rgba(147,168,150,0.12);
+}
+.status-dot.online{
+  background:var(--emerald);
+  box-shadow:0 0 0 4px rgba(63,190,121,0.18);
+}
+.status-dot.offline{
+  background:#C0594A;
+  box-shadow:0 0 0 4px rgba(192,89,74,0.18);
+}
+.status-text{
+  font-weight:600;
+  font-size:14px;
+}
+.status-sub{
+  color:var(--text-muted);
+  font-size:13px;
+  margin-top:2px;
+}
+.status-count{
+  margin-left:auto;
+  text-align:right;
+}
+.status-count strong{
+  display:block;
+  font-size:22px;
+  color:var(--emerald-soft);
+  font-family:'Press Start 2P', monospace;
+  font-size:16px;
+}
+.status-count span{
+  font-size:12px;
+  color:var(--text-muted);
+}
+@media (max-width:560px){
+  .status-panel{flex-wrap:wrap;}
+  .status-count{margin-left:0;text-align:left;}
+}
+
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.svg" alt="Logo Economy Dewa SMP">
+      <span class="brand-name">Economy Dewa SMP<span>Survival &amp; Economy Server</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Buka menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="rank.html" class="active">Rank</a></li>
+      <li><a href="rules.html">Aturan</a></li>
+      <li><a href="about.html">Tentang Kami</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="wrap page-header">
+  <h1>DAFTAR RANK</h1>
+  <p>Rank menandai status pemain di Economy Dewa SMP, dari yang gratis sampai yang paling eksklusif. Setiap rank punya warna nama sendiri dan fiturnya bisa kamu lihat di kolom sebelah kanan.</p>
+</header>
+
+<section class="wrap section" style="padding-top:8px;">
+  <ul class="rank-tier-list">
+
+    <li class="rank-tier" style="--tier-color:#6BDD6B; --tier-gradient:linear-gradient(90deg,#6BDD6B,#6BDD6B);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Mortal</p>
+        <p class="rank-tier-price">Gratis</p>
+        <span class="rank-tier-badge-default">Rank Default</span>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="rank-tier" style="--tier-color:#C9CED3; --tier-gradient:linear-gradient(90deg,#FFFFFF,#9AA0A6);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Aither</p>
+        <p class="rank-tier-price">Rp 15.000</p>
+        <div class="buy-dropdown" data-rank="Aither" data-price="Rp 15.000">
+          <button type="button" class="rank-tier-buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>Beli Rank</button>
+          <div class="buy-menu">
+            <span class="buy-menu-label">Pilih Admin</span>
+            <a href="#" class="buy-menu-item" data-admin="clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Clay</a>
+            <a href="#" class="buy-menu-item" data-admin="winata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Winata</a>
+          </div>
+        </div>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="rank-tier" style="--tier-color:#55E6E6; --tier-gradient:linear-gradient(90deg,#55E6E6,#FFFFFF);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Aion</p>
+        <p class="rank-tier-price">Rp 30.000</p>
+        <div class="buy-dropdown" data-rank="Aion" data-price="Rp 30.000">
+          <button type="button" class="rank-tier-buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>Beli Rank</button>
+          <div class="buy-menu">
+            <span class="buy-menu-label">Pilih Admin</span>
+            <a href="#" class="buy-menu-item" data-admin="clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Clay</a>
+            <a href="#" class="buy-menu-item" data-admin="winata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Winata</a>
+          </div>
+        </div>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="rank-tier" style="--tier-color:#FF6EC7; --tier-gradient:linear-gradient(90deg,#FF6EC7,#FF5555);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Kratos</p>
+        <p class="rank-tier-price">Rp 50.000</p>
+        <div class="buy-dropdown" data-rank="Kratos" data-price="Rp 50.000">
+          <button type="button" class="rank-tier-buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>Beli Rank</button>
+          <div class="buy-menu">
+            <span class="buy-menu-label">Pilih Admin</span>
+            <a href="#" class="buy-menu-item" data-admin="clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Clay</a>
+            <a href="#" class="buy-menu-item" data-admin="winata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Winata</a>
+          </div>
+        </div>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="rank-tier" style="--tier-color:#5B8CFF; --tier-gradient:linear-gradient(90deg,#5B8CFF,#FFFFFF);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Archon</p>
+        <p class="rank-tier-price">Rp 75.000</p>
+        <div class="buy-dropdown" data-rank="Archon" data-price="Rp 75.000">
+          <button type="button" class="rank-tier-buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>Beli Rank</button>
+          <div class="buy-menu">
+            <span class="buy-menu-label">Pilih Admin</span>
+            <a href="#" class="buy-menu-item" data-admin="clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Clay</a>
+            <a href="#" class="buy-menu-item" data-admin="winata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Winata</a>
+          </div>
+        </div>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="rank-tier" style="--tier-color:#C77DFF; --tier-gradient:linear-gradient(90deg,#C77DFF,#6A0DAD);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Anax</p>
+        <p class="rank-tier-price">Rp 120.000</p>
+        <div class="buy-dropdown" data-rank="Anax" data-price="Rp 120.000">
+          <button type="button" class="rank-tier-buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>Beli Rank</button>
+          <div class="buy-menu">
+            <span class="buy-menu-label">Pilih Admin</span>
+            <a href="#" class="buy-menu-item" data-admin="clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Clay</a>
+            <a href="#" class="buy-menu-item" data-admin="winata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Winata</a>
+          </div>
+        </div>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="rank-tier" style="--tier-color:#FFD700; --tier-gradient:linear-gradient(90deg,#FFD700,#FFFFFF,#FFD700);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Olympios</p>
+        <p class="rank-tier-price">Rp 200.000</p>
+        <div class="buy-dropdown" data-rank="Olympios" data-price="Rp 200.000">
+          <button type="button" class="rank-tier-buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>Beli Rank</button>
+          <div class="buy-menu">
+            <span class="buy-menu-label">Pilih Admin</span>
+            <a href="#" class="buy-menu-item" data-admin="clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Clay</a>
+            <a href="#" class="buy-menu-item" data-admin="winata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Winata</a>
+          </div>
+        </div>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="rank-tier" style="--tier-color:#FFD700; --tier-gradient:linear-gradient(90deg,#FFD700,#FF3B3B);">
+      <div class="rank-tier-main">
+        <p class="rank-tier-name">Theophanes</p>
+        <p class="rank-tier-price">Rp 300.000</p>
+        <div class="buy-dropdown" data-rank="Theophanes" data-price="Rp 300.000">
+          <button type="button" class="rank-tier-buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>Beli Rank</button>
+          <div class="buy-menu">
+            <span class="buy-menu-label">Pilih Admin</span>
+            <a href="#" class="buy-menu-item" data-admin="clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Clay</a>
+            <a href="#" class="buy-menu-item" data-admin="winata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Admin Winata</a>
+          </div>
+        </div>
+      </div>
+      <div class="rank-tier-features">
+        <ul>
+          <li><span class="bullet"></span>Fitur 1</li>
+          <li><span class="bullet"></span>Fitur 2</li>
+          <li><span class="bullet"></span>Fitur 3</li>
+          <li><span class="bullet"></span>Fitur 4</li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+
+  <p class="rank-note">Isi kolom fitur di atas sesuai perk asli tiap rank di server kamu. Tinggal edit teks "Fitur 1", "Fitur 2", dst di file rank.html.</p>
+</section>
+
+<div class="qris-overlay" id="qrisOverlay">
+  <div class="qris-modal">
+    <button type="button" class="qris-close" id="qrisClose" aria-label="Tutup">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3>Scan QRIS untuk Bayar</h3>
+    <p class="qris-order">Rank <strong id="qrisRank">-</strong> · <strong id="qrisPrice">-</strong></p>
+    <img src="assets/qris.jpg" alt="QRIS Economy Dewa SMP">
+    <p class="qris-note">Scan pakai e-wallet atau m-banking apa saja yang mendukung QRIS. Setelah transfer berhasil, klik tombol di bawah untuk konfirmasi ke admin.</p>
+    <button type="button" class="qris-confirm" id="qrisConfirm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Sudah Bayar, Chat Admin
+    </button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="Logo Economy Dewa SMP">
+      <span>Economy Dewa SMP</span>
+    </div>
+    <span>play.economydewa.my.id : 25502</span>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
